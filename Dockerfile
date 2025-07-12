@@ -1,16 +1,22 @@
 FROM python:3.10.12-slim
 
-WORKDIR /app
+# Sistem bağımlılıklarını yükle
+RUN apt-get update && apt-get install -y \
+    libcairo2 \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libgdk-pixbuf2.0-0 \
+    libffi-dev \
+    shared-mime-info \
+ && rm -rf /var/lib/apt/lists/*
+
+# Uygulama kodunu ekleyin
 COPY . /app
+WORKDIR /app
 
-# pip, wheel güncelle
+# Python bağımlılıklarını yükleyin
 RUN pip install --upgrade pip wheel
-
-# Binary wheel’leri tercih et
 RUN pip install --prefer-binary -r requirements.txt
 
-# Port belirt (Flask default 5000)
-EXPOSE 5000
-
-# Uygulamayı başlat
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:5000"]
+# Çalıştırma komutu
+CMD ["gunicorn", "app:app", "--bind=0.0.0.0:5000"]
