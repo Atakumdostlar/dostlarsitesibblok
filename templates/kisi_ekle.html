@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Kişi Ekle</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h3 class="text-center mb-4">➕ Yeni Kişi Ekle</h3>
+
+    <div class="card">
+      <div class="card-body">
+        <form method="post">
+
+          <div class="mb-3">
+            <label class="form-label">Ad Soyad:</label>
+            <input type="text" name="ad_soyad" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Daire No:</label>
+            <input type="text" name="daire_no" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Telefon:</label>
+            <input type="text" name="telefon" class="form-control">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Şifre:</label>
+            <input type="text" name="sifre" class="form-control" required>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Rol:</label>
+            <select name="rol" class="form-select" required>
+              <option value="yonetici">Yönetici</option>
+              <option value="sakin">Sakin</option>
+            </select>
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-success">💾 Kaydet</button>
+            <a href="/kisiler" class="btn btn-secondary">← Geri Dön</a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

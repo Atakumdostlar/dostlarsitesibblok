@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Gelir Raporu</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    h2, h3 { text-align: center; margin-bottom: 20px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+    .right-align { text-align: right; }
+    tfoot td {
+      font-weight: bold;
+      background-color: #e9e9e9;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📈 Gelir Raporu</h2>
+  <h3>📌 Toplam Gelir: ₺ {{ toplam }}</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Başlık</th>
+        <th>Tarih</th>
+        <th class="right-align">Tutar (₺)</th>
+        <th>Açıklama</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for gelir in gelirler %}
+      <tr>
+        <td>{{ gelir["baslik"] }}</td>
+        <td>{{ gelir["tarih"] }}</td>
+        <td class="right-align">₺ {{ tl_format(gelir["tutar"]) }}</td>
+        <td>{{ gelir["aciklama"] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">Toplam Gelir</td>
+        <td class="right-align">₺ {{ toplam }}</td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+
+</body>
+</html>

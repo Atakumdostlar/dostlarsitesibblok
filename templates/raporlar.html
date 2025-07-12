@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>📊 Raporlar</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">📋 Kasa & Gelir-Gider Raporları</h2>
+
+    <!-- 🔍 Tarih Filtresi -->
+    <form method="get" action="/raporlar" class="row justify-content-center mb-4">
+      <div class="col-md-3">
+        <label for="baslangic" class="form-label">Başlangıç Tarihi:</label>
+        <input type="date" name="baslangic" id="baslangic" class="form-control" value="{{ baslangic }}">
+      </div>
+      <div class="col-md-3">
+        <label for="bitis" class="form-label">Bitiş Tarihi:</label>
+        <input type="date" name="bitis" id="bitis" class="form-control" value="{{ bitis }}">
+      </div>
+      <div class="col-md-3">
+        <label for="siralama" class="form-label">Sıralama Alanı:</label>
+        <select name="siralama" id="siralama" class="form-select">
+          <option value="tarih" {% if siralama=='tarih' %}selected{% endif %}>Tarih</option>
+          <option value="tutar" {% if siralama=='tutar' %}selected{% endif %}>Tutar</option>
+          <option value="baslik" {% if siralama=='baslik' %}selected{% endif %}>Başlık</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label for="yon" class="form-label">Yön:</label>
+        <select name="yon" id="yon" class="form-select">
+          <option value="ASC" {% if yon=='ASC' %}selected{% endif %}>Artan</option>
+          <option value="DESC" {% if yon=='DESC' %}selected{% endif %}>Azalan</option>
+        </select>
+      </div>
+      <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-dark w-100">Filtrele</button>
+      </div>
+    </form>
+
+    <!-- 💰 Dönem Özeti -->
+    {% if baslangic and bitis %}
+    <div class="alert alert-info text-center mt-4">
+      <h5>📊 Dönem Özeti: {{ baslangic }} - {{ bitis }}</h5>
+      <hr>
+      <p><strong>Aidat Geliri:</strong> ₺{{ aidat_toplam }}</p>
+      <p><strong>Diğer Gelirler:</strong> ₺{{ diger_gelir_toplam }}</p>
+      <p><strong>Toplam Gelir:</strong> ₺{{ gelirler_toplam }}</p>
+      <p><strong>Toplam Gider:</strong> ₺{{ gider_toplam }}</p>
+      <p><strong>💼 Dönemsel Kasa:</strong>
+        <span class="text-{{ 'success' if donem_kasa >= 0 else 'danger' }}">
+          ₺{{ donem_kasa }}
+        </span>
+      </p>
+    </div>
+    {% endif %}
+
+    <!-- 📋 Yıllık Aidat -->
+    <a href="/aidat12" class="btn btn-outline-warning mt-3">Yıllık Aidat Tablosu 📊</a>
+
+    <!-- 📈 Gelirler Tablosu -->
+    <h4 class="mt-4">📈 Gelirler</h4>
+    <table class="table table-bordered table-sm">
+      <thead>
+        <tr><th>Başlık</th><th>Tarih</th><th>Tutar</th><th>Açıklama</th></tr>
+      </thead>
+      <tbody>
+        {% for gelir in gelirler %}
+        <tr>
+          <td>{{ gelir["baslik"] }}</td>
+          <td>{{ gelir["tarih"] }}</td>
+          <td>₺ {{ gelir["tutar"] }}</td>
+          <td>{{ gelir["aciklama"] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- 📉 Giderler Tablosu -->
+    <h4 class="mt-5">📉 Giderler</h4>
+    <table class="table table-bordered table-sm">
+      <thead>
+        <tr><th>Tarih</th><th>Açıklama</th><th>Tutar</th></tr>
+      </thead>
+      <tbody>
+        {% for gider in giderler %}
+        <tr>
+          <td>{{ gider["tarih"] }}</td>
+          <td>{{ gider["aciklama"] }}</td>
+          <td>₺ {{ gider["tutar"] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- 📦 Export Kartları -->
+    <div class="row text-center">
+      <div class="col-md-4 mb-4">
+        <div class="card border-success shadow">
+          <div class="card-body">
+            <h5 class="card-title text-success">📈 Gelir Raporu</h5>
+            <a href="/export/gelirler?baslangic={{ baslangic }}&bitis={{ bitis }}&siralama={{ siralama }}&yon={{ yon }}" class="btn btn-success w-100 my-2">⬇️ Excel İndir</a>
+            <a href="/export/gelirler/pdf?baslangic={{ baslangic }}&bitis={{ bitis }}&siralama={{ siralama }}&yon={{ yon }}" class="btn btn-outline-success w-100">⬇️ PDF İndir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card border-warning shadow">
+          <div class="card-body">
+            <h5 class="card-title text-warning">📉 Gider Raporu</h5>
+            <a href="/export/giderler?baslangic={{ baslangic }}&bitis={{ bitis }}&siralama={{ siralama }}&yon={{ yon }}" class="btn btn-warning w-100 my-2">⬇️ Excel İndir</a>
+            <a href="/export/giderler/pdf?baslangic={{ baslangic }}&bitis={{ bitis }}&siralama={{ siralama }}&yon={{ yon }}" class="btn btn-outline-warning w-100">⬇️ PDF İndir</a>
+          </div>
+        </div>
+      </div>
+
+  
+
+    <!-- 🔙 Geri Dönüş -->
+    <div class="text-center mt-4 mb-5">
+      <a href="/panel" class="btn btn-secondary">← Panele Dön</a>
+    </div>
+  </div>
+</body>
+</html>

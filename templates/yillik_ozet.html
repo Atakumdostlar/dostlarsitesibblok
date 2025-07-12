@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Yıllık Kasa Özeti</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h3 class="text-center mb-4">📊 Yıllık Kasa Özeti</h3>
+
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>Yıl</th>
+          <th>Aidat Geliri</th>
+          <th>Diğer Gelir</th>
+          <th>Toplam Gelir</th>
+          <th>Gider</th>
+          <th>Devir</th>
+          <th>Kasa Sonu</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for satir in ozet %}
+        <tr class="text-end">
+          <td class="text-center">{{ satir.yil }}</td>
+          <td>₺ {{ '%.2f'|format(satir.aidat) }}</td>
+          <td>₺ {{ '%.2f'|format(satir.gelir) }}</td>
+          <td>₺ {{ '%.2f'|format(satir.toplam) }}</td>
+          <td>₺ {{ '%.2f'|format(satir.gider) }}</td>
+          <td>₺ {{ '%.2f'|format(satir.devir) }}</td>
+          <td><strong>₺ {{ '%.2f'|format(satir.kasa) }}</strong></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="text-center mt-4">
+      <a href="/export/yillik-pdf" class="btn btn-outline-danger">⬇️ PDF’e Aktar</a>
+      <a href="/panel" class="btn btn-outline-secondary ms-2">← Panele Dön</a>
+    </div>
+  </div>
+</body>
+</html>

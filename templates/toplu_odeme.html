@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Borç & Toplu Ödeme</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+  <div class="container mt-5">
+    <h4 class="text-center mb-4">Borç Analizi & Toplu Ödeme</h4>
+
+    <form method="post" class="card p-4 mb-4">
+      <div class="mb-3">
+        <label class="form-label">Kullanıcı Seç:</label>
+        <select name="user_id" class="form-select" onchange="this.form.submit()" required>
+          <option value="" disabled selected>Seçiniz</option>
+          {% for k in kisiler %}
+            <option value="{{ k.user_id }}" {% if secilen_id == k.user_id %}selected{% endif %}>
+              {{ k.daire_no }} - {{ k.ad_soyad }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+{% if whatsapp_link %}
+  <div class="mt-3 text-end">
+    <a class="btn btn-success" href="{{ whatsapp_link }}" target="_blank">
+      WhatsApp ile Bilgilendir 📲
+    </a>
+  </div>
+{% endif %}
+
+      {% if borclar %}
+        <h5 class="mt-3">📋 Borç Listesi</h5>
+        <table class="table table-bordered table-sm">
+          <thead class="table-light text-center">
+            <tr>
+              <th>Dönem</th>
+              <th>Aidat Miktarı (₺)</th>
+              <th>Ödenen (₺)</th>
+              <th>Kalan (₺)</th>
+              <th>Durum</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for b in borclar %}
+              <tr class="text-center">
+                <td>{{ b["yil"] }}/{{ "%02d"|format(b["ay"]) }}</td>
+                <td>{{ "%.2f"|format(b["aidat_miktari"]) }}</td>
+<td>{{ "%.2f"|format(b["odenen"]) }}</td>
+<td>{{ "%.2f"|format(b["aidat_miktari"] - b["odenen"]) }}</td>
+
+                <td>
+                  {% if b["odenen"] >= b["aidat_miktari"] %}
+                    ✅ Ödendi
+                  {% elif b["odenen"] == 0 %}
+                    ❌ Beklemede
+                  {% else %}
+                    🟡 Kısmi
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+       <div class="text-end mb-4">
+  <strong>Toplam Aidat:</strong> ₺{{ "%.2f"|format(toplam_borc) }}<br>
+  <strong>Toplam Ödenen:</strong> ₺{{ "%.2f"|format(toplam_odenen) }}<br>
+  <strong style="font-size: 4.5rem; color: #dc3545;">
+    ⏳ Toplam Kalan: ₺{{ "%.2f"|format(toplam_borc - toplam_odenen) }}
+  </strong>
+</div>
+
+      {% endif %}
+
+      {% if secilen_id %}
+        <div class="mb-3">
+          <label class="form-label">Toplu Ödeme Tutarı (₺):</label>
+          <input type="number" name="odeme" step="0.01" min="0" class="form-control" required>
+        </div>
+        <div class="text-end">
+          <button type="submit" class="btn btn-primary">💳 Ödemeyi Yay</button>
+        </div>
+      {% endif %}
+    </form>
+
+    {% if toplam_odeme %}
+      <h5 class="mt-4">🧾 Ödeme Dağılımı</h5>
+      <ul class="list-group mb-3">
+        {% for d in detaylar %}
+          <li class="list-group-item">{{ d }}</li>
+        {% endfor %}
+      </ul>
+      <div class="mb-3">
+        <strong>Toplam Ödeme:</strong> ₺{{ "%.2f"|format(toplam_odeme) }}<br>
+        <strong>Kalan Bakiye:</strong> ₺{{ "%.2f"|format(kalan_tutar) }}
+      </div>
+      <div class="text-end mb-4">
+        <a href="{{ whatsapp_link }}" target="_blank" class="btn btn-success">📲 WhatsApp ile Paylaş</a>
+      </div>
+    {% endif %}
+
+    <div class="text-end">
+      <a href="/panel" class="btn btn-secondary">← Panele Dön</a>
+    </div>
+  </div>
+
+</body>
+</html>

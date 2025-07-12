@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>Aidat12 Tablosu</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-4">
+
+  <h4 class="mb-4">Aidat Ödeme Tablosu - {{ yil }}</h4>
+
+  <!-- 🔘 Yıl seçimi + Butonlar -->
+  <div class="d-flex align-items-center gap-2 mb-3">
+    <form method="get" class="d-flex align-items-center gap-2">
+      <label for="yil">Yıl:</label>
+      <select name="yil" id="yil" class="form-select w-auto">
+        {% for y in range(2020, 2031) %}
+          <option value="{{ y }}" {% if yil == y|string %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="btn btn-primary">Göster</button>
+    </form>
+
+    <!-- 📦 Ek Butonlar -->
+    <a href="/aidat12/excel?yil={{ yil }}" class="btn btn-success">⬇️ Excel</a>
+    <a href="/aidat12/pdf?yil={{ yil }}" class="btn btn-danger">⬇️ PDF</a>
+   <a href="/panel" class="btn btn-secondary">↩️ Ana Sayfaya Dön</a>
+
+
+
+  </div>
+
+  <!-- 📋 Aidat Tablosu -->
+  <table class="table table-bordered table-sm text-center align-middle border border-dark">
+    <thead class="table-dark">
+      <tr>
+        <th class="text-start">Sakin</th>
+        {% for _, ay_ad in aylar %}
+          <th>{{ ay_ad }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for ad_soyad, odemeler in tablo.items() %}
+        <tr>
+          <td class="text-start fw-bold">{{ ad_soyad }}</td>
+          {% for ay_kod, _ in aylar %}
+            {% set tutar = odemeler[ay_kod] %}
+            <td class="{% if tutar == 0 %}bg-danger-subtle{% else %}bg-success-subtle{% endif %}">
+              ₺{{ '%.2f' | format(tutar) }}
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- 💳 Genel Toplam -->
+  <div class="mt-4 text-center fw-bold text-success" style="font-size: 48px;">
+    💳 Toplam Ödenen Aidat: ₺{{ '%.2f' | format(toplam_genel) }}
+  </div>
+
+</body>
+</html>

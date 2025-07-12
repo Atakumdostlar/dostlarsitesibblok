@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Yönetim Paneli</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .custom-button {
+      width: 200px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h3 class="text-center mb-4">🛠️ Apartman Yönetim Paneli</h3>
+
+    <div class="d-flex flex-column align-items-center gap-3">
+
+      <a href="/toplu-odeme" class="btn btn-outline-warning custom-button">💳 Borç & Toplu Ödeme</a>
+      <a href="/gelir-ekle" class="btn btn-outline-success custom-button">💰 Gelir Ekle</a>
+      <a href="/gider-ekle" class="btn btn-outline-danger custom-button">💸 Gider Ekle</a>
+
+      <a href="/gelirler" class="btn btn-outline-success custom-button">📋 Gelirler Listesi</a>
+      <a href="/giderler" class="btn btn-outline-danger custom-button">📋 Giderler Listesi</a>
+      <a href="/aidatlar" class="btn btn-outline-primary custom-button">📋 Aidat Listesi</a>
+
+      <a href="/kisiler" class="btn btn-outline-dark custom-button">👥 Kişiler</a>
+      <a href="/raporlar" class="btn btn-outline-secondary custom-button">📄 Raporlar</a>
+      <a href="/tarifeler" class="btn btn-outline-primary custom-button">📋 Tarifeleri Görüntüle</a>
+
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="{{ url_for('cikis') }}" class="btn btn-sm btn-danger">🚪 Çıkış Yap</a>
+    </div>
+  </div>
+</body>
+</html>

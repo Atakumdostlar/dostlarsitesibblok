@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Giriş Yap</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Apartman Sistemi Giriş</h2>
+    <form method="POST" action="/giris">
+  <div class="mb-3">
+    <input type="text" name="daire_no" placeholder="Daire No" class="form-control" required>
+  </div>
+
+  <div class="mb-3">
+    <input type="password" name="sifre" placeholder="Şifre" class="form-control" required>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Giriş Yap</button>
+
+  {% if hata %}
+    <div class="alert alert-danger mt-3">{{ hata }}</div>
+  {% endif %}
+</form>
+
+  </div>
+</body>
+</html>

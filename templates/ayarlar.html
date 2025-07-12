@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistem Ayarları</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+
+    <!-- 🔙 Panele Dön Butonu -->
+    <div class="text-end mb-3">
+      <a href="/panel" class="btn btn-secondary">← Panele Dön</a>
+    </div>
+
+    <h3 class="text-center mb-4">⚙️ Sistem Ayarları</h3>
+
+    <form method="post" class="card p-4">
+
+      <!-- 📋 Tarifeleri Görüntüle -->
+      <div class="text-end mb-3">
+        <a href="/tarifeler" class="btn btn-outline-primary">
+          📋 Tarifeleri Görüntüle
+        </a>
+      </div>
+
+      <!-- 📬 Mail Adresi -->
+      <div class="mb-3">
+        <label class="form-label">Yönetim Mail Adresi:</label>
+        <input type="email" name="mail_adresi"
+               value="{{ ayar['mail_adresi'] or '' }}" class="form-control">
+      </div>
+
+      <!-- 📨 Mail Başlığı -->
+      <div class="mb-3">
+        <label class="form-label">Mail Başlığı:</label>
+        <input type="text" name="mail_basligi"
+               value="{{ ayar['mail_basligi'] or '' }}" class="form-control">
+      </div>
+
+      <!-- 📝 Mail Gövdesi -->
+      <div class="mb-3">
+        <label class="form-label">Mail Gövdesi:</label>
+        <textarea name="mail_govdesi" rows="4" class="form-control">{{ ayar['mail_govdesi'] or '' }}</textarea>
+      </div>
+
+      <!-- 📲 WhatsApp Şablonu -->
+      <div class="mb-3">
+        <label class="form-label">WhatsApp Mesaj Şablonu:</label>
+        <textarea name="whatsapp_sablonu" rows="4" class="form-control">{{ ayar['whatsapp_sablonu'] or '' }}</textarea>
+      </div>
+
+      <!-- 💾 Kaydet ve Geri Butonları -->
+      <div class="d-flex justify-content-between mt-4">
+        <button type="submit" class="btn btn-success">💾 Kaydet</button>
+        <a href="/panel" class="btn btn-secondary">← Panele Dön</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

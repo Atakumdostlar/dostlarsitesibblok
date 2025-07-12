@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Gelir Ekle</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h3 class="mb-4 text-center">➕ Yeni Gelir Ekle</h3>
+    <form method="POST">
+      <div class="mb-3">
+        <label for="baslik" class="form-label">Gelir Başlığı</label>
+        <input type="text" class="form-control" id="baslik" name="baslik" required>
+      </div>
+      <div class="mb-3">
+        <label for="tutar" class="form-label">Tutar (₺)</label>
+        <input type="number" step="0.01" class="form-control" id="tutar" name="tutar" required>
+      </div>
+      <div class="mb-3">
+        <label for="tarih" class="form-label">Tarih</label>
+        <input type="date" class="form-control" id="tarih" name="tarih" required>
+      </div>
+      <div class="mb-3">
+        <label for="aciklama" class="form-label">Açıklama (Opsiyonel)</label>
+        <textarea class="form-control" id="aciklama" name="aciklama" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn btn-success">Kaydet</button>
+      <a href="/panel" class="btn btn-secondary ms-2">Panele Dön</a>
+
+    </form>
+  </div>
+</body>
+</html>

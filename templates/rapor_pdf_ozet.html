@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Kasa Özeti</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+  <h2 style="text-align:center;">💼 Kasa Özeti Raporu</h2>
+{% if baslangic and bitis %}
+  <h4 style="text-align:center;">📅 Tarih Aralığı: {{ baslangic }} – {{ bitis }}</h4>
+{% endif %}
+
+<table style="width:100%; border-collapse:collapse; font-family:Arial;">
+  <tr><th style="border:1px solid #444; padding:8px;">Başlık</th><th style="border:1px solid #444; padding:8px;">Tutar (₺)</th></tr>
+  <tr><td style="border:1px solid #444; padding:8px;">Toplam Gelir</td><td style="border:1px solid #444; padding:8px;">₺ {{ toplam_gelir }}</td></tr>
+  <tr><td style="border:1px solid #444; padding:8px;">Toplam Gider</td><td style="border:1px solid #444; padding:8px;">₺ {{ toplam_gider }}</td></tr>
+  <tr><td style="border:1px solid #444; padding:8px; font-weight:bold;">Net Kasa</td><td style="border:1px solid #444; padding:8px; font-weight:bold;">₺ {{ net_kasa }}</td></tr>
+</table>
+
+
+</body>
+</html>
