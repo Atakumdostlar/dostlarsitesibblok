@@ -19,4 +19,4 @@ RUN pip install --upgrade pip wheel
 RUN pip install --prefer-binary -r requirements.txt
 
 # Çalıştırma komutu
-CMD ["gunicorn", "app:app", "--bind=0.0.0.0:5000"]
+CMD ["sh", "-c", "gunicorn app:app --bind 0.0.0.0:${PORT}"]
